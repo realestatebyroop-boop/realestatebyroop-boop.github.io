@@ -4,7 +4,7 @@ export const site = {
   phone: '604.808.8667',
   phoneHref: 'tel:+16048088667',
   email: 'info@akshconstruction.com',
-  serviceArea: 'Serving the Lower Mainland, from West Vancouver to Hope',
+  serviceArea: 'Serving all of the Lower Mainland, including Metro Vancouver',
   description: 'Family-owned drywall, steel stud framing, ceiling systems and custom homes. 30+ years across the Lower Mainland.',
   // Web3Forms access key for info@akshconstruction.com. Designed to be public.
   // Leave empty until it is generated: the form shows a "please call" message.
