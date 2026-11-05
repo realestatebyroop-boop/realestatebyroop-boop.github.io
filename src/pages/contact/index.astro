@@ -1,0 +1,170 @@
+---
+import Base from '../../layouts/Base.astro';
+import Eyebrow from '../../components/Eyebrow.astro';
+import { site } from '../../site.config';
+const services = [
+  { v: 'Drywall', trade: 'drywall' },
+  { v: 'Steel stud framing', trade: 'steel-stud-framing' },
+  { v: 'Ceiling systems', trade: 'ceilings' },
+  { v: 'Tenant improvement', trade: 'tenant-improvements' },
+  { v: 'Custom home', trade: 'custom-homes' },
+  { v: 'Other', trade: 'other' },
+];
+---
+<Base title="Request a Quote | Aksh Construction" description="Tell us about your drywall, steel stud, ceiling, tenant improvement or custom home project. Serving the Lower Mainland, from West Vancouver to Hope.">
+  <section class="page-intro">
+    <div class="wrap">
+      <Eyebrow text="Contact" />
+      <h1>Get in Touch</h1>
+      <p class="lede">Tell us about your project and we will get back to you promptly with a clear, detailed quote.</p>
+    </div>
+  </section>
+  <section class="page-body">
+    <div class="wrap contact-grid">
+      <form class="form" id="quote" action="https://api.web3forms.com/submit" method="POST" tabindex="-1">
+        <input type="hidden" name="access_key" value={site.web3formsKey} />
+        <input type="hidden" name="subject" value="New quote request: akshconstruction.com" />
+        <input type="hidden" name="from_name" value="akshconstruction.com" />
+        <input type="hidden" name="redirect" value={`${site.url}/thank-you/`} />
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <div class="form-row">
+          <div class="field"><label for="f-name">Name <span class="req">(required)</span></label><input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="e-name" /><p class="error" id="e-name"></p></div>
+          <div class="field"><label for="f-company">Company</label><input id="f-company" name="company" type="text" autocomplete="organization" /></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label for="f-email">Email <span class="req">(required)</span></label><input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email" /><p class="error" id="e-email"></p></div>
+          <div class="field"><label for="f-phone">Phone <span class="req">(required)</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel" required aria-describedby="e-phone" /><p class="error" id="e-phone"></p></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label for="f-location">Project location (city) <span class="req">(required)</span></label><input id="f-location" name="Project location" type="text" required aria-describedby="e-location" /><p class="error" id="e-location"></p></div>
+          <div class="field">
+            <label for="f-role">I am a <span class="req">(required)</span></label>
+            <select id="f-role" name="I am a" required aria-describedby="e-role">
+              <option value="">Please choose</option>
+              <option>General contractor / builder</option><option>Developer</option><option>Homeowner</option><option>Other</option>
+            </select>
+            <p class="error" id="e-role"></p>
+          </div>
+        </div>
+        <fieldset class="field" id="f-services" aria-describedby="e-services">
+          <legend>Service needed <span class="req">(required)</span></legend>
+          <div class="checks">
+            {services.map((s) => (
+              <label><input type="checkbox" name={`Service: ${s.v}`} value="Yes" data-service={s.v} data-trade={s.trade} /> {s.v}</label>
+            ))}
+          </div>
+          <p class="error" id="e-services"></p>
+        </fieldset>
+        <div class="field">
+          <label for="f-timeline">Timeline <span class="req">(required)</span></label>
+          <select id="f-timeline" name="Timeline" required aria-describedby="e-timeline">
+            <option value="">Please choose</option>
+            <option>As soon as possible</option><option>Within 1 to 3 months</option><option>3 to 6 months</option><option>6+ months</option><option>Just planning</option>
+          </select>
+          <p class="error" id="e-timeline"></p>
+        </div>
+        <div class="field"><label for="f-details">Project details <span class="req">(required)</span></label><textarea id="f-details" name="message" required aria-describedby="e-details"></textarea><p class="error" id="e-details"></p></div>
+        <p class="form-status" id="form-status" role="status" tabindex="-1"></p>
+        <button class="btn btn--primary" type="submit">Request a Quote</button>
+      </form>
+      <aside class="contact-aside" aria-label="Other ways to reach us">
+        <div><h2>Phone</h2><a href={site.phoneHref}>{site.phone}</a><p class="small muted">Prefer to talk it through? Call us directly.</p></div>
+        <div><h2>Email</h2><a class="email" href={`mailto:${site.email}`}>{site.email}</a></div>
+        <div><h2>Service area</h2><p>{site.serviceArea}</p></div>
+      </aside>
+    </div>
+  </section>
+</Base>
+<script>
+  const form = document.getElementById('quote') as HTMLFormElement | null;
+  if (form) {
+    form.noValidate = true;
+    const status = document.getElementById('form-status') as HTMLElement;
+    const boxes = [...form.querySelectorAll<HTMLInputElement>('input[data-service]')];
+    const button = form.querySelector('button[type=submit]') as HTMLButtonElement;
+
+    const trade = new URLSearchParams(location.search).get('trade');
+    if (trade) boxes.forEach((b) => { if (b.dataset.trade === trade) b.checked = true; });
+
+    const rules: Array<[string, string, string]> = [
+      ['f-name', 'e-name', 'Please enter your name.'],
+      ['f-email', 'e-email', 'Please enter a valid email address.'],
+      ['f-phone', 'e-phone', 'Please enter a phone number.'],
+      ['f-location', 'e-location', 'Please enter the project city.'],
+      ['f-role', 'e-role', 'Please choose the option that fits you best.'],
+      ['f-timeline', 'e-timeline', 'Please choose a timeline.'],
+      ['f-details', 'e-details', 'Please tell us a little about the project.'],
+    ];
+    type Field = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+    const check = (id: string, errId: string, msg: string) => {
+      const el = document.getElementById(id) as Field;
+      const ok = el.value.trim() !== '' && el.checkValidity();
+      if (ok) el.removeAttribute('aria-invalid'); else el.setAttribute('aria-invalid', 'true');
+      (document.getElementById(errId) as HTMLElement).textContent = ok ? '' : msg;
+      return ok;
+    };
+    const checkServices = () => {
+      const ok = boxes.some((b) => b.checked);
+      (document.getElementById('e-services') as HTMLElement).textContent = ok ? '' : 'Please choose at least one service.';
+      return ok;
+    };
+    rules.forEach(([id, errId, msg]) => {
+      document.getElementById(id)?.addEventListener('blur', (e) => {
+        const el = e.target as Field;
+        if (el.value || el.getAttribute('aria-invalid')) check(id, errId, msg);
+      });
+    });
+    boxes.forEach((b) => b.addEventListener('change', checkServices));
+
+    const fail = (msg: string) => {
+      status.className = 'form-status form-status--error';
+      status.textContent = msg;
+      status.focus();
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.textContent = '';
+      status.className = 'form-status';
+      const results = rules.map(([id, errId, msg]) => check(id, errId, msg));
+      const servicesOk = checkServices();
+      if (!results.every(Boolean) || !servicesOk) {
+        const first = rules.find((_, i) => !results[i]);
+        const order = ['f-name', 'f-email', 'f-phone', 'f-location', 'f-role'];
+        if (first && order.includes(first[0])) document.getElementById(first[0])?.focus();
+        else if (!servicesOk) boxes[0].focus();
+        else if (first) document.getElementById(first[0])?.focus();
+        return;
+      }
+      const data = new FormData(form);
+      if (data.get('botcheck')) return;
+      if (!data.get('access_key')) {
+        fail('The online form is not connected yet. Please call us at 604.808.8667 or email info@akshconstruction.com.');
+        return;
+      }
+      const chosen = boxes.filter((b) => b.checked).map((b) => b.dataset.service ?? '');
+      boxes.forEach((b) => data.delete(b.name));
+      data.set('Service needed', chosen.join(', '));
+      data.set('subject', `New quote request: ${data.get('name')}, ${chosen.join(', ')}`);
+      data.delete('botcheck');
+      data.delete('redirect');
+      button.disabled = true;
+      button.textContent = 'Sending';
+      try {
+        const res = await fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: data });
+        const json = await res.json();
+        if (!res.ok || !json.success) throw new Error(json.message);
+        form.querySelectorAll('.form-row, .field, button').forEach((el) => el.setAttribute('hidden', ''));
+        status.className = 'form-status';
+        status.innerHTML = 'Thanks, we have your request. Our team will be in touch shortly. For anything urgent, call <a href="tel:+16048088667">604.808.8667</a>.';
+        status.focus();
+      } catch {
+        fail('Something went wrong and your request was not sent. Please try again, or call us at 604.808.8667.');
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Request a Quote';
+      }
+    });
+  }
+</script>

@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../site.config';
+---
+<Base title="Thank You | Aksh Construction" description="We have your quote request." noindex>
+  <section class="section">
+    <div class="wrap narrow">
+      <h1>Thanks, we have your request.</h1>
+      <p class="lede">Our team will be in touch shortly. For anything urgent, call <a href={site.phoneHref}>{site.phone}</a>.</p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="/">Back to Home</a>
+        <a class="btn btn--outline" href="/projects/">View Projects</a>
+      </div>
+    </div>
+  </section>
+</Base>

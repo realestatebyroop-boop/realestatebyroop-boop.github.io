@@ -1,0 +1,136 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import QuoteCallout from '../components/QuoteCallout.astro';
+import { getProjects } from '../lib/projects';
+import heroImg from '../content/projects/surrey-spec-home-6795/01.jpg';
+import workImg from '../content/projects/surrey-spec-home-4066/11.jpg';
+import drywall from '../assets/site/drywall.jpg';
+import steel from '../assets/site/homeCallout.jpg';
+import ceilings from '../assets/site/ceilings.jpg';
+import ti from '../assets/site/steelStud.jpg';
+import homes from '../assets/site/customHomes.jpg';
+
+const featured = (await getProjects()).filter((p) => p.data.featured)
+  .sort((a, b) => Number(b.data.category === 'commercial') - Number(a.data.category === 'commercial'));
+
+const services = [
+  { title: 'Drywall', img: drywall, alt: 'Drywall finisher smoothing a ceiling joint', href: '/services/#drywall', text: 'Board, tape, mud and finish for new construction and tenant improvements, delivered clean and on schedule.' },
+  { title: 'Steel Stud Framing', img: steel, alt: 'Interior steel stud framing in progress in a commercial space', href: '/services/#steel-stud-framing', text: 'Interior steel framing for commercial spaces, from large new builds to renovations.' },
+  { title: 'Ceiling Systems', img: ceilings, alt: 'Suspended ceiling grid being installed in a commercial interior', href: '/services/#ceilings', text: 'T-bar and drop ceilings installed level, tight and inspection-ready.' },
+  { title: 'Tenant Improvements', img: ti, alt: 'Open commercial interior ready for a tenant fit-out', href: '/services/#tenant-improvements', text: 'Coordinated interior fit-outs for retail, fitness, office and commercial spaces.' },
+];
+const points = [
+  { t: 'Clear estimates', d: 'detailed, itemized quotes with no surprises.', i: '<path d="M6 3h12v18H6z"/><path class="accent" d="M9 8h6M9 12h6M9 16h3"/>' },
+  { t: 'Organized scheduling', d: 'crews that show up when the schedule says they will.', i: '<path d="M4 6h16v15H4zM8 3v5M16 3v5"/><path class="accent" d="M4 11h16"/>' },
+  { t: 'Progress updates', d: 'you always know where your job stands.', i: '<path d="M4 20V4M4 20h16"/><path class="accent" d="M8 16l4-5 3 3 5-7"/>' },
+  { t: 'Accurate invoicing', d: 'clean, timely billing that matches the work.', i: '<path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path class="accent" d="M9 9l2 2 4-4"/>' },
+];
+---
+<Base
+  title="Aksh Construction | Drywall, Steel Stud Framing and Custom Homes, Lower Mainland BC"
+  description="Family-owned with 30+ years of experience. Drywall, steel stud framing, T-bar ceilings, tenant improvements and custom homes from West Vancouver to Hope."
+  overlayHeader
+>
+  <section class="hero">
+    <div class="hero__media">
+      <Picture src={heroImg} formats={['avif', 'webp']} widths={[800, 1280, 1920, 2500]} sizes="100vw" alt="" loading="eager" fetchpriority="high" decoding="async" />
+    </div>
+    <div class="wrap hero__content">
+      <span class="eyebrow"><span class="eyebrow__mark" aria-hidden="true">_</span>Family-Owned&nbsp;&nbsp;·&nbsp;&nbsp;30+ Years</span>
+      <h1>Built Right.<br />Built On Time.</h1>
+      <p class="hero__sub">Drywall, steel stud framing and ceiling systems for general contractors and builders across the Lower Mainland, plus custom homes built with the same care.</p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="/contact/#quote">Request a Quote</a>
+        <a class="btn btn--outline-light" href="/projects/">View Projects</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="proof on-dark" aria-label="At a glance">
+    <div class="wrap">
+      <ul>
+        <li><strong>30+ Years</strong><span>of experience</span></li>
+        <li><strong>Family-owned</strong><span>and operated</span></li>
+        <li><strong>Commercial</strong><span>and residential</span></li>
+        <li><strong>West Vancouver</strong><span>to Hope</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <Eyebrow text="Services" />
+        <h2>What We Build</h2>
+      </div>
+      <div class="card-grid card-grid--4">
+        {services.map((s) => (
+          <article class="card reveal">
+            <div class="card__media">
+              <Picture src={s.img} formats={['avif', 'webp']} widths={[400, 590].filter((w) => w <= s.img.width)} sizes="(min-width: 1100px) 25vw, (min-width: 620px) 50vw, 100vw" alt={s.alt} loading="lazy" decoding="async" />
+            </div>
+            <div class="card__body">
+              <h3>{s.title}</h3>
+              <p class="small">{s.text}</p>
+              <a class="text-link small" href={s.href}>{s.title} details</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" aria-hidden="true"></div>
+
+  <section class="section">
+    <div class="wrap split">
+      <div class="split__media reveal">
+        <Picture src={workImg} formats={['avif', 'webp']} widths={[640, 960, 1280]} sizes="(min-width: 900px) 50vw, 100vw" alt="Open-plan kitchen and living area of a spec home in Surrey built by Aksh Construction" loading="lazy" decoding="async" />
+      </div>
+      <div class="reveal">
+        <Eyebrow text="How We Work" />
+        <h2>Family-Owned. 30+ Years Strong. Built for How Projects Run Today.</h2>
+        <p class="split-copy">Aksh Construction is a family-owned company with over 30 years of experience across the Lower Mainland. We pair that experience with modern technology and processes, so our clients are taken care of on site and behind the scenes. Clear estimates, organized scheduling, regular progress updates and accurate, timely invoicing mean you spend less time chasing paperwork and more time building.</p>
+        <ul class="points">
+          {points.map((p) => (
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true" set:html={p.i} />
+              <div class="small"><strong>{p.t}:</strong> {p.d}</div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--grey">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <Eyebrow text="Projects" />
+        <h2>Recent Work</h2>
+      </div>
+      <div class="card-grid card-grid--4">
+        {featured.map((p) => <div class="reveal card-cell"><ProjectCard project={p} featured sizes="(min-width: 1100px) 25vw, (min-width: 620px) 50vw, 100vw" /></div>)}
+      </div>
+      <p class="split-copy"><a class="text-link" href="/projects/">View All Projects</a></p>
+    </div>
+  </section>
+
+  <section class="band on-dark">
+    <div class="band__text">
+      <div class="reveal">
+        <h2>Custom Homes, Built to Last</h2>
+        <p>Beyond our trade work, Aksh Construction builds custom and spec homes across Surrey and the Lower Mainland. Every home gets the same planning, craftsmanship and attention to detail we bring to every job site.</p>
+        <a class="text-link" href="/projects/?type=residential">See Our Homes</a>
+      </div>
+    </div>
+    <div class="band__media">
+      <Picture src={homes} formats={['avif', 'webp']} widths={[640, 960, 1280]} sizes="(min-width: 900px) 50vw, 100vw" alt="Kitchen of a spec home in Surrey built by Aksh Construction" loading="lazy" decoding="async" />
+    </div>
+  </section>
+
+  <QuoteCallout divider={false} />
+</Base>

@@ -1,0 +1,53 @@
+---
+import Base from '../../layouts/Base.astro';
+import Eyebrow from '../../components/Eyebrow.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import QuoteCallout from '../../components/QuoteCallout.astro';
+import { getProjects } from '../../lib/projects';
+const projects = await getProjects();
+const filters = [ { v: 'all', l: 'All' }, { v: 'commercial', l: 'Commercial' }, { v: 'residential', l: 'Residential' } ];
+---
+<Base title="Commercial and Residential Projects | Aksh Construction" description="Tenant improvements, custom homes and spec builds completed by Aksh Construction across the Lower Mainland, BC. See the work, the scope and the numbers.">
+  <section class="page-intro">
+    <div class="wrap">
+      <Eyebrow text="Projects" />
+      <h1>Our Projects</h1>
+      <p class="lede">A selection of commercial and residential work completed by our team.</p>
+    </div>
+  </section>
+  <section class="page-body">
+    <div class="wrap">
+      <div class="chips" role="group" aria-label="Filter projects by type">
+        {filters.map((f, i) => <button class="chip" type="button" data-filter={f.v} aria-pressed={i === 0 ? 'true' : 'false'}>{f.l}</button>)}
+      </div>
+      <p class="sr-only" id="filter-status" role="status"></p>
+      <div class="card-grid card-grid--3" id="project-grid">
+        {projects.map((p) => <ProjectCard project={p} />)}
+      </div>
+    </div>
+  </section>
+  <QuoteCallout />
+</Base>
+<script>
+  const chips = [...document.querySelectorAll<HTMLButtonElement>('.chip')];
+  const cards = [...document.querySelectorAll<HTMLElement>('#project-grid .card')];
+  const status = document.getElementById('filter-status');
+  const apply = (type: string, push: boolean) => {
+    const value = ['commercial', 'residential'].includes(type) ? type : 'all';
+    chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.filter === value)));
+    let shown = 0;
+    cards.forEach((c) => {
+      const show = value === 'all' || c.dataset.category === value;
+      c.hidden = !show;
+      if (show) shown++;
+    });
+    if (status && push) status.textContent = `Showing ${shown} ${shown === 1 ? 'project' : 'projects'}`;
+    if (push) {
+      const url = new URL(location.href);
+      if (value === 'all') url.searchParams.delete('type'); else url.searchParams.set('type', value);
+      history.replaceState(null, '', url);
+    }
+  };
+  chips.forEach((c) => c.addEventListener('click', () => apply(c.dataset.filter ?? 'all', true)));
+  apply(new URLSearchParams(location.search).get('type') ?? 'all', false);
+</script>

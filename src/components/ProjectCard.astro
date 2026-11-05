@@ -1,0 +1,18 @@
+---
+import { Picture } from 'astro:assets';
+import { getHero, city, cardDetail, type Project } from '../lib/projects';
+interface Props { project: Project; featured?: boolean; sizes?: string; }
+const { project: p, featured = false, sizes = '(min-width: 1100px) 33vw, (min-width: 620px) 50vw, 100vw' } = Astro.props;
+const hero = getHero(p);
+const contain = p.data.heroFit === 'contain';
+---
+<article class:list={['card', 'card--link', { 'card--featured': featured }]} data-category={p.data.category}>
+  <div class:list={['card__media', { 'card__media--contain': contain }]}>
+    <Picture src={hero.src} formats={['avif', 'webp']} widths={[480, 800].filter((w) => w <= hero.src.width)} {sizes} alt={hero.alt} loading="lazy" decoding="async" />
+  </div>
+  <div class="card__body">
+    <h3><a href={`/projects/${p.id}/`}>{p.data.title}</a></h3>
+    <p class="card__meta">{city(p)} · {p.data.type}</p>
+    <p class="small">{cardDetail(p)}</p>
+  </div>
+</article>

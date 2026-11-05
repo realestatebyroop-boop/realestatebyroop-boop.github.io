@@ -1,0 +1,32 @@
+---
+import { site } from '../site.config';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="/brand/aksh-logo-full-white.svg" alt="Aksh Construction" width="147" height="44" loading="lazy" />
+        <p>{site.description}</p>
+      </div>
+      <nav aria-label="Footer">
+        <h2>Explore</h2>
+        <ul>
+          <li><a href="/services/">Services</a></li>
+          <li><a href="/projects/">Projects</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </nav>
+      <div>
+        <h2>Contact</h2>
+        <ul>
+          <li><a href={site.phoneHref}>{site.phone}</a></li>
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+        </ul>
+        <p class="small footer-area">{site.serviceArea}</p>
+      </div>
+    </div>
+    <p class="footer-legal">© {year} Aksh Construction. All rights reserved.</p>
+  </div>
+</footer>

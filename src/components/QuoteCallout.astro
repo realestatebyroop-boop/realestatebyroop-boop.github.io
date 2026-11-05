@@ -1,0 +1,15 @@
+---
+import { site } from '../site.config';
+const { divider = true } = Astro.props;
+---
+{divider && <div class="divider" aria-hidden="true"></div>}
+<section class="section callout">
+  <div class="wrap reveal">
+    <h2>Have a Project Coming Up?</h2>
+    <p>Send us your scope and timeline and our team will get back to you promptly with a clear, detailed quote.</p>
+    <div class="btn-row">
+      <a class="btn btn--primary" href="/contact/#quote">Request a Quote</a>
+      <a class="btn btn--outline" href={site.phoneHref}>Call {site.phone}</a>
+    </div>
+  </div>
+</section>

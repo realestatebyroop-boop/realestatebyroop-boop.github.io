@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+# Local-only source data
+projects-import.json
+# Local-only photos
+src/content/projects/surrey-custom-home-6279/*.jpg
+scripts/extra-images.json
+CLAUDE.md

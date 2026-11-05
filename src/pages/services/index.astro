@@ -1,0 +1,58 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Eyebrow from '../../components/Eyebrow.astro';
+import QuoteCallout from '../../components/QuoteCallout.astro';
+import drywall from '../../assets/site/drywall.jpg';
+import steel from '../../assets/site/homeCallout.jpg';
+import ceilings from '../../assets/site/ceilings.jpg';
+import ti from '../../assets/site/steelStud.jpg';
+import homes from '../../content/projects/surrey-spec-home-6714/01.jpg';
+
+const services = [
+  { id: 'drywall', trade: 'drywall', title: 'Drywall', img: drywall, alt: 'Drywall finisher smoothing a ceiling joint',
+    text: 'Complete drywall packages for commercial and residential projects: board installation, taping, mudding and finishing to the specified level, fire-rated and sound-rated assemblies, and clean handover ready for paint.',
+    inc: ['Board supply and install', 'Taping and finishing (Level 4 and Level 5)', 'Fire and sound rated assemblies', 'Patch and repair', 'Site clean-up'] },
+  { id: 'steel-stud-framing', trade: 'steel-stud-framing', title: 'Steel Stud Framing', img: steel, alt: 'Interior steel stud framing in progress in a commercial space',
+    text: 'Interior non-structural steel stud framing for new commercial builds and renovations, laid out accurately and built to drawings.',
+    inc: ['Wall and bulkhead framing', 'Layout from drawings', 'Door and opening framing', 'Backing and blocking', 'Coordination with mechanical and electrical trades'] },
+  { id: 'ceilings', trade: 'ceilings', title: 'Ceiling Systems', img: ceilings, alt: 'Suspended ceiling grid being installed in a commercial interior',
+    text: 'T-bar (suspended) and drop ceiling systems installed level and ready for inspection.',
+    inc: ['T-bar grid and tile', 'Drop ceilings', 'Drywall ceilings and bulkheads', 'Access panels', 'Coordination with lighting and mechanical'] },
+  { id: 'tenant-improvements', trade: 'tenant-improvements', title: 'Tenant Improvements', img: ti, alt: 'Open commercial interior ready for a tenant fit-out',
+    text: 'Interior fit-outs for commercial spaces such as gyms, retail and offices, delivered on tight schedules so tenants can open on time.',
+    inc: ['Demising walls', 'Framing', 'Drywall', 'Ceilings', 'Flooring coordination', 'Finishing'] },
+  { id: 'custom-homes', trade: 'custom-homes', title: 'Custom Homes', img: homes, alt: 'Front exterior of a spec home in Surrey built by Aksh Construction',
+    text: 'Custom and spec homes built from the ground up across Surrey and the Lower Mainland, with experienced project management from permit to occupancy.',
+    inc: ['General contracting', 'Project management', 'Trade coordination', 'Scheduling', 'Quality control and final walkthrough'] },
+];
+---
+<Base title="Drywall, Framing and Ceiling Services | Aksh Construction" description="Drywall, steel stud framing, T-bar and drop ceilings, tenant improvements and custom homes for builders and owners across the Lower Mainland, BC.">
+  <section class="page-intro">
+    <div class="wrap">
+      <Eyebrow text="Services" />
+      <h1>Our Services</h1>
+      <p class="lede">Commercial trade work for general contractors and builders, and custom homes for owners who want it done right.</p>
+    </div>
+  </section>
+  {services.map((s, i) => (
+    <>
+      <div class="divider" aria-hidden="true"></div>
+      <section class="service" id={s.id}>
+        <div class:list={['wrap', 'split', { 'split--flip': i % 2 === 1 }]}>
+          <div class="split__media reveal">
+            <Picture src={s.img} formats={['avif', 'webp']} widths={[480, 590, 800, 1200].filter((w) => w <= s.img.width)} sizes="(min-width: 900px) 50vw, 100vw" alt={s.alt} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+          </div>
+          <div class="reveal">
+            <h2>{s.title}</h2>
+            <p>{s.text}</p>
+            <h3>What's included</h3>
+            <ul class="check-list">{s.inc.map((x) => <li>{x}</li>)}</ul>
+            <a class="text-link" href={`/contact/?trade=${s.trade}#quote`}>Request a quote for {s.title.toLowerCase()}</a>
+          </div>
+        </div>
+      </section>
+    </>
+  ))}
+  <QuoteCallout />
+</Base>

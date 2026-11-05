@@ -1,0 +1,40 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Eyebrow from '../../components/Eyebrow.astro';
+import QuoteCallout from '../../components/QuoteCallout.astro';
+import img from '../../content/projects/surrey-spec-home-4066/03.jpg';
+const why = [
+  ['Experience and reliability', 'Three decades in the region means we know local codes, conditions and expectations. Thorough planning keeps jobs on schedule and on budget.'],
+  ['Skilled crews', 'Seasoned framers, drywall specialists and finishers who take pride in precise, durable work.'],
+  ['Clean, safe sites', 'Organized job sites and clean handovers, every time.'],
+  ['Easy to work with', 'Clear communication, fast quotes and organized paperwork.'],
+];
+---
+<Base title="About Us: Family-Owned, 30+ Years | Aksh Construction" description="Aksh Construction is a family-owned company with over 30 years of experience building across the Lower Mainland, from drywall and framing to custom homes.">
+  <section class="section">
+    <div class="wrap split split--tall split--flip">
+      <div class="split__media">
+        <Picture src={img} formats={['avif', 'webp']} widths={[640, 960, 1280]} sizes="(min-width: 900px) 50vw, 100vw" alt="Foyer and staircase of a spec home in Surrey built by Aksh Construction" loading="eager" decoding="async" />
+      </div>
+      <div class="prose">
+        <Eyebrow text="Our Story" />
+        <h1>About Aksh Construction</h1>
+        <p>Aksh Construction is a family-owned company that has been building across the Lower Mainland for over 30 years. What started as a skilled trade business has grown into a full-service team delivering drywall, steel stud framing, ceiling systems, tenant improvements and custom homes.</p>
+        <p>As a family business, every project gets personal attention. You work directly with an experienced team that treats your project as if it were our own: accountable, respectful and committed to quality.</p>
+        <p>Building on three decades of experience, we use modern technology and processes so our clients are looked after on site and behind the scenes, from the first estimate through scheduling, progress updates and final invoicing.</p>
+      </div>
+    </div>
+  </section>
+  <section class="section section--grey">
+    <div class="wrap">
+      <div class="section-head reveal"><h2>Why GCs Work With Us</h2></div>
+      <div class="card-grid card-grid--4">
+        {why.map(([t, d]) => (
+          <article class="card reveal"><div class="card__body"><h3>{t}</h3><p class="small">{d}</p></div></article>
+        ))}
+      </div>
+    </div>
+  </section>
+  <QuoteCallout />
+</Base>
