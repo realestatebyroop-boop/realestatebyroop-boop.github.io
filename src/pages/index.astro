@@ -7,20 +7,20 @@ import QuoteCallout from '../components/QuoteCallout.astro';
 import { getProjects } from '../lib/projects';
 import heroImg from '../content/projects/surrey-spec-home-6795/01.jpg';
 import workImg from '../content/projects/surrey-spec-home-4066/11.jpg';
-import drywall from '../assets/site/drywall.jpg';
-import steel from '../assets/site/homeCallout.jpg';
-import ceilings from '../assets/site/ceilings.jpg';
-import ti from '../assets/site/steelStud.jpg';
+import drywall from '../assets/site/service-drywall.jpg';
+import steel from '../assets/site/service-steel-stud-framing.jpg';
+import ceilings from '../assets/site/service-ceilings.jpg';
+import ti from '../assets/site/service-tenant-improvements.jpg';
 import homes from '../assets/site/customHomes.jpg';
 
 const featured = (await getProjects()).filter((p) => p.data.featured)
   .sort((a, b) => Number(b.data.category === 'commercial') - Number(a.data.category === 'commercial'));
 
 const services = [
-  { title: 'Drywall', img: drywall, alt: 'Drywall finisher smoothing a ceiling joint', href: '/services/#drywall', text: 'Board, tape, mud and finish for new construction and tenant improvements, delivered clean and on schedule.' },
-  { title: 'Steel Stud Framing', img: steel, alt: 'Interior steel stud framing in progress in a commercial space', href: '/services/#steel-stud-framing', text: 'Interior steel framing for commercial spaces, from large new builds to renovations.' },
-  { title: 'Ceiling Systems', img: ceilings, alt: 'Suspended ceiling grid being installed in a commercial interior', href: '/services/#ceilings', text: 'T-bar and drop ceilings installed level, tight and inspection-ready.' },
-  { title: 'Tenant Improvements', img: ti, alt: 'Open commercial interior ready for a tenant fit-out', href: '/services/#tenant-improvements', text: 'Coordinated interior fit-outs for retail, fitness, office and commercial spaces.' },
+  { title: 'Drywall', img: drywall, alt: 'Taped and finished drywall wall and bulkhead in a commercial interior', href: '/services/#drywall', text: 'Board, tape, mud and finish for new construction and tenant improvements, delivered clean and on schedule.' },
+  { title: 'Steel Stud Framing', img: steel, alt: 'Interior steel stud framing with a framed door opening in a commercial space', href: '/services/#steel-stud-framing', text: 'Interior steel framing for commercial spaces, from large new builds to renovations.' },
+  { title: 'Ceiling Systems', img: ceilings, alt: 'T-bar ceiling with part of the grid open and part tiled in a commercial interior', href: '/services/#ceilings', text: 'T-bar and drop ceilings installed level, tight and inspection-ready.' },
+  { title: 'Tenant Improvements', img: ti, alt: 'Commercial unit near the end of its interior fit-out, with a navy feature wall and glass offices', href: '/services/#tenant-improvements', text: 'Coordinated interior fit-outs for retail, fitness, office and commercial spaces.' },
 ];
 const points = [
   { t: 'Clear estimates', d: 'detailed, itemized quotes with no surprises.', i: '<path d="M6 3h12v18H6z"/><path class="accent" d="M9 8h6M9 12h6M9 16h3"/>' },
@@ -70,7 +70,7 @@ const points = [
         {services.map((s) => (
           <article class="card reveal">
             <div class="card__media">
-              <Picture src={s.img} formats={['avif', 'webp']} widths={[400, 590].filter((w) => w <= s.img.width)} sizes="(min-width: 1100px) 25vw, (min-width: 620px) 50vw, 100vw" alt={s.alt} loading="lazy" decoding="async" />
+              <Picture src={s.img} formats={['avif', 'webp']} widths={[400, 600, 900].filter((w) => w <= s.img.width)} sizes="(min-width: 1100px) 25vw, (min-width: 620px) 50vw, 100vw" alt={s.alt} loading="lazy" decoding="async" />
             </div>
             <div class="card__body">
               <h3>{s.title}</h3>

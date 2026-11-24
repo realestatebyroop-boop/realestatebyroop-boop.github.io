@@ -3,23 +3,23 @@ import { Picture } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import Eyebrow from '../../components/Eyebrow.astro';
 import QuoteCallout from '../../components/QuoteCallout.astro';
-import drywall from '../../assets/site/drywall.jpg';
-import steel from '../../assets/site/homeCallout.jpg';
-import ceilings from '../../assets/site/ceilings.jpg';
-import ti from '../../assets/site/steelStud.jpg';
+import drywall from '../../assets/site/service-drywall.jpg';
+import steel from '../../assets/site/service-steel-stud-framing.jpg';
+import ceilings from '../../assets/site/service-ceilings.jpg';
+import ti from '../../assets/site/service-tenant-improvements.jpg';
 import homes from '../../content/projects/surrey-spec-home-6714/01.jpg';
 
 const services = [
-  { id: 'drywall', trade: 'drywall', title: 'Drywall', img: drywall, alt: 'Drywall finisher smoothing a ceiling joint',
+  { id: 'drywall', trade: 'drywall', title: 'Drywall', img: drywall, alt: 'Taped and finished drywall wall and bulkhead in a commercial interior',
     text: 'Complete drywall packages for commercial and residential projects: board installation, taping, mudding and finishing to the specified level, fire-rated and sound-rated assemblies, and clean handover ready for paint.',
     inc: ['Board supply and install', 'Taping and finishing (Level 4 and Level 5)', 'Fire and sound rated assemblies', 'Patch and repair', 'Site clean-up'] },
-  { id: 'steel-stud-framing', trade: 'steel-stud-framing', title: 'Steel Stud Framing', img: steel, alt: 'Interior steel stud framing in progress in a commercial space',
+  { id: 'steel-stud-framing', trade: 'steel-stud-framing', title: 'Steel Stud Framing', img: steel, alt: 'Interior steel stud framing with a framed door opening in a commercial space',
     text: 'Interior non-structural steel stud framing for new commercial builds and renovations, laid out accurately and built to drawings.',
     inc: ['Wall and bulkhead framing', 'Layout from drawings', 'Door and opening framing', 'Backing and blocking', 'Coordination with mechanical and electrical trades'] },
-  { id: 'ceilings', trade: 'ceilings', title: 'Ceiling Systems', img: ceilings, alt: 'Suspended ceiling grid being installed in a commercial interior',
+  { id: 'ceilings', trade: 'ceilings', title: 'Ceiling Systems', img: ceilings, alt: 'T-bar ceiling with part of the grid open and part tiled in a commercial interior',
     text: 'T-bar (suspended) and drop ceiling systems installed level and ready for inspection.',
     inc: ['T-bar grid and tile', 'Drop ceilings', 'Drywall ceilings and bulkheads', 'Access panels', 'Coordination with lighting and mechanical'] },
-  { id: 'tenant-improvements', trade: 'tenant-improvements', title: 'Tenant Improvements', img: ti, alt: 'Open commercial interior ready for a tenant fit-out',
+  { id: 'tenant-improvements', trade: 'tenant-improvements', title: 'Tenant Improvements', img: ti, alt: 'Commercial unit near the end of its interior fit-out, with a navy feature wall and glass offices',
     text: 'Interior fit-outs for commercial spaces such as gyms, retail and offices, delivered on tight schedules so tenants can open on time.',
     inc: ['Demising walls', 'Framing', 'Drywall', 'Ceilings', 'Flooring coordination', 'Finishing'] },
   { id: 'custom-homes', trade: 'custom-homes', title: 'Custom Homes', img: homes, alt: 'Front exterior of a spec home in Surrey built by Aksh Construction',
